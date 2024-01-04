@@ -43,6 +43,7 @@ final class Relationship
         }
     }
 
+    /** @internal */
     public function render(string $indentation): string
     {
         $output = $indentation . $this->entity->getName();

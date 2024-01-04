@@ -52,6 +52,7 @@ final class Entity
         return $new;
     }
 
+    /** @internal */
     public function render(string $indentation): string
     {
         $body = $this->renderItems($this->attributes, $indentation);

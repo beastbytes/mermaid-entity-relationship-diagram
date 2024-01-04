@@ -12,8 +12,9 @@ use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 use BeastBytes\Mermaid\RenderItemsTrait;
 use BeastBytes\Mermaid\TitleTrait;
+use Stringable;
 
-final class EntityRelationshipDiagram implements MermaidInterface
+final class EntityRelationshipDiagram implements MermaidInterface, Stringable
 {
     use RenderItemsTrait;
     use TitleTrait;

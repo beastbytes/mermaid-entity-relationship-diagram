@@ -19,6 +19,7 @@ final class Attribute
     {
     }
 
+    /** @internal */
     public function render(string $indentation): string
     {
         return $indentation . $this->type . ' ' . $this->name
