@@ -10,10 +10,12 @@ namespace BeastBytes\Mermaid\EntityRelationshipDiagram;
 
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
+use BeastBytes\Mermaid\RenderItemsTrait;
 use BeastBytes\Mermaid\TitleTrait;
 
 final class EntityRelationshipDiagram implements MermaidInterface
 {
+    use RenderItemsTrait;
     use TitleTrait;
 
     private const TYPE = 'erDiagram';
@@ -70,14 +72,8 @@ final class EntityRelationshipDiagram implements MermaidInterface
         }
 
         $output[] = self::TYPE;
-
-        foreach ($this->entities as $entity) {
-            $output[] = $entity->render(Mermaid::INDENTATION);
-        }
-
-        foreach ($this->relationships as $relationship) {
-            $output[] = $relationship->render(Mermaid::INDENTATION);
-        }
+        $output[] = $this->renderItems($this->entities, '');
+        $output[] = $this->renderItems($this->relationships, '');
 
         return Mermaid::render($output);
     }

@@ -59,7 +59,7 @@ test('Entity Relationship Diagram', function () {
         'allows'
     );
 
-    $persoNamedDriver = new Relationship(
+    $personNamedDriver = new Relationship(
         $person,
         Cardinality::ExactlyOne,
         $namedDriver,
@@ -72,7 +72,7 @@ test('Entity Relationship Diagram', function () {
         ->withEntity($manufacturer, $car)
         ->addEntity($person, $namedDriver)
         ->withRelationship($manufacturerCar)
-        ->addRelationship($carNamedDriver, $persoNamedDriver)
+        ->addRelationship($carNamedDriver, $personNamedDriver)
     ;
 
     expect($entityRelationDiagram->render())
