@@ -5,6 +5,8 @@ use BeastBytes\Mermaid\EntityRelationshipDiagram\Entity;
 use BeastBytes\Mermaid\EntityRelationshipDiagram\Key;
 use BeastBytes\Mermaid\Mermaid;
 
+defined('COMMENT') or define('COMMENT', 'comment');
+
 test('Simple entity', function () {
     $entity = (new Entity('PERSON'))
         ->withAttribute(new Attribute('email', 'string'))
@@ -27,6 +29,21 @@ test('Entity with alias', function () {
         ->toBe("p[\"PERSON\"] {\n"
                . "  string email\n"
                . '}'
+        )
+    ;
+});
+
+test('Entity with comment', function () {
+    $entity = (new Entity('p', 'PERSON'))
+        ->withAttribute(new Attribute('email', 'string'))
+        ->withComment(COMMENT)
+    ;
+
+    expect($entity->render(''))
+        ->toBe('%% ' . COMMENT . "\n"
+            . "p[\"PERSON\"] {\n"
+            . "  string email\n"
+            . '}'
         )
     ;
 });

@@ -8,11 +8,13 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\EntityRelationshipDiagram;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\RenderItemsTrait;
 use InvalidArgumentException;
 
 final class Entity
 {
+    use CommentTrait;
     use RenderItemsTrait;
 
     private const NAME_REGEX = '/^[_a-zA-Z][\w-]*$/';
@@ -55,15 +57,13 @@ final class Entity
     /** @internal */
     public function render(string $indentation): string
     {
-        $body = $this->renderItems($this->attributes, $indentation);
+        $output = [];
 
-        return implode(
-            "\n",
-            [
-                $indentation . $this->name . ($this->alias === '' ? '' : '["' . $this->alias . '"]') . ' {',
-                $body,
-                $indentation . '}'
-            ]
-        );
+        $this->renderComment($indentation, $output);
+        $output[] = $indentation . $this->name . ($this->alias === '' ? '' : '["' . $this->alias . '"]') . ' {';
+        $this->renderItems($this->attributes, $indentation, $output);
+        $output[] = $indentation . '}';
+
+        return implode("\n", $output);
     }
 }

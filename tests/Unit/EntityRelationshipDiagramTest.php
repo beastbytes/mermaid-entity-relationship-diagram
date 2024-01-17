@@ -8,6 +8,9 @@ use BeastBytes\Mermaid\EntityRelationshipDiagram\Key;
 use BeastBytes\Mermaid\EntityRelationshipDiagram\Relationship;
 use BeastBytes\Mermaid\EntityRelationshipDiagram\RelationshipType;
 
+defined('COMMENT') or define('COMMENT', 'comment');
+defined('TITLE') or define('TITLE', 'title');
+
 test('Entity Relationship Diagram', function () {
     $car = (new Entity('c', 'CAR'))
         ->withAttribute(
@@ -68,7 +71,9 @@ test('Entity Relationship Diagram', function () {
         'is'
     );
 
-    $entityRelationDiagram = (new EntityRelationshipDiagram('Car Drivers'))
+    $entityRelationDiagram = (new EntityRelationshipDiagram())
+        ->withTitle(TITLE)
+        ->withComment(COMMENT)
         ->withEntity($manufacturer, $car)
         ->addEntity($person, $namedDriver)
         ->withRelationship($manufacturerCar)
@@ -78,8 +83,9 @@ test('Entity Relationship Diagram', function () {
     expect($entityRelationDiagram->render())
         ->toBe("<pre class=\"mermaid\">\n"
             . "---\n"
-            . "title: Car Drivers\n"
+            . 'title: ' . TITLE . "\n"
             . "---\n"
+            . '%% ' . COMMENT . "\n"
             . "erDiagram\n"
             . "  m[&quot;MANUFACTURER&quot;] {\n"
             . "    int(11) id PK\n"

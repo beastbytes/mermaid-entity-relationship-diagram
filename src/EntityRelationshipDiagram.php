@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\EntityRelationshipDiagram;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 use BeastBytes\Mermaid\RenderItemsTrait;
@@ -16,6 +17,7 @@ use Stringable;
 
 final class EntityRelationshipDiagram implements MermaidInterface, Stringable
 {
+    use CommentTrait;
     use RenderItemsTrait;
     use TitleTrait;
 
@@ -25,10 +27,6 @@ final class EntityRelationshipDiagram implements MermaidInterface, Stringable
     private array $entities = [];
     /** @var Relationship[] $relationships */
     private array $relationships = [];
-
-    public function __construct(private readonly string $title = '')
-    {
-    }
 
     public function __toString(): string
     {
@@ -68,13 +66,12 @@ final class EntityRelationshipDiagram implements MermaidInterface, Stringable
         /** @psalm-var list<string> $output */
         $output = [];
 
-        if ($this->title !== '') {
-            $output[] = $this->getTitle();
-        }
+        $this->renderTitle($output);
+        $this->renderComment('', $output);
 
         $output[] = self::TYPE;
-        $output[] = $this->renderItems($this->entities, '');
-        $output[] = $this->renderItems($this->relationships, '');
+        $this->renderItems($this->entities, '', $output);
+        $this->renderItems($this->relationships, '', $output);
 
         return Mermaid::render($output);
     }
