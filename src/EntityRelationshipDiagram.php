@@ -61,7 +61,7 @@ final class EntityRelationshipDiagram implements MermaidInterface, Stringable
         return $new;
     }
 
-    public function render(): string
+    public function render(array $attributes = []): string
     {
         /** @psalm-var list<string> $output */
         $output = [];
@@ -73,6 +73,6 @@ final class EntityRelationshipDiagram implements MermaidInterface, Stringable
         $this->renderItems($this->entities, '', $output);
         $this->renderItems($this->relationships, '', $output);
 
-        return Mermaid::render($output);
+        return Mermaid::render($output, $attributes);
     }
 }
